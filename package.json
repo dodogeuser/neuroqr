@@ -1,0 +1,20 @@
+{
+  "name": "neuroqr-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "NeuroQR static marketing website — HTML, JavaScript, CSS and Tailwind",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build:pages": "node scripts/build.mjs",
+    "build:css": "tailwindcss -i styles/input.css -o assets/styles.css --minify",
+    "build": "npm run build:pages && npm run build:css",
+    "check": "node --check assets/site.js && node --check assets/config.js && node --check scripts/build.mjs && node --check scripts/serve.mjs",
+    "test": "node scripts/test.mjs"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.1.13",
+    "tailwindcss": "4.1.13",
+    "playwright": "1.63.0"
+  }
+}
