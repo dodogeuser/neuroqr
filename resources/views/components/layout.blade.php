@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f5f5ef">
+  <meta name="theme-color" content="#f8fafc">
   <title>{{ $title }} | Nexus Qart</title>
   <meta name="description" content="{{ $description }}">
   <link rel="canonical" href="{{ url()->current() }}">
@@ -21,7 +21,7 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="container header-inner">
-      <a href="{{ route('home') }}" class="brand" aria-label="Nexus Qart home"><img src="{{ asset('assets/nexus-qart-logo.svg') }}" width="205" height="46" alt="Nexus Qart"></a>
+      <a href="{{ route('home') }}" class="brand" aria-label="Nexus Qart home"><img src="{{ asset('assets/nexus-qart-logo.svg') }}" width="221" height="42" alt="Nexus Qart"></a>
       <nav class="desktop-nav" aria-label="Main navigation">
         @foreach (['home' => 'Home', 'about' => 'About', 'services' => 'Services', 'products' => 'Products'] as $name => $label)
           <a href="{{ route($name) }}" @if(request()->routeIs($name) || ($name === 'products' && request()->routeIs('nexa'))) aria-current="page" @endif>{{ $label }}</a>
@@ -40,7 +40,7 @@
   <main id="main">{{ $slot }}</main>
   <footer class="site-footer">
     <div class="container footer-top">
-      <div><a class="brand" href="{{ route('home') }}"><img src="{{ asset('assets/nexus-qart-logo.svg') }}" width="205" height="46" alt="Nexus Qart home"></a><p>Good ideas deserve<br>thoughtful technology.</p></div>
+      <div><a class="brand" href="{{ route('home') }}"><img src="{{ asset('assets/nexus-qart-logo-light.svg') }}" width="221" height="42" alt="Nexus Qart home"></a><p>Good ideas deserve<br>thoughtful technology.</p></div>
       <div><h2>Explore</h2><a href="{{ route('about') }}">About us</a><a href="{{ route('services') }}">Our services</a><a href="{{ route('contact') }}">Get in touch</a></div>
       <div><h2>Our products</h2><a href="{{ route('products') }}">All products</a>
         @foreach (config('products') as $product)
