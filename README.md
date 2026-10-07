@@ -1,71 +1,60 @@
-# NeuroQR
+# Nexus Qart
 
-A seven-page marketing website built with HTML, vanilla JavaScript, CSS, and locally compiled Tailwind CSS. No frontend framework, CSS CDN, external fonts, analytics, or application backend is required.
+A Laravel 12 company portfolio with a dedicated showcase for **Nexa**, the separate QR menu application at [getwooperly.com/login](https://getwooperly.com/login).
 
-## Preview
+## Run locally
 
-The generated HTML and CSS are included. From this directory:
-
-```powershell
-python -m http.server 4173 --bind 127.0.0.1
-```
-
-Open **http://127.0.0.1:4173**. An editor's static server also works. Relative paths allow `index.html` to be opened directly for a basic preview.
-
-## Pages
-
-- `/` — company positioning, philosophy, product overview, pricing, roadmap
-- `/products/` — current product and broader product philosophy
-- `/products/intelligent-qr/` — customer/admin experiences and AI example
-- `/services/` — AI, software, security, and business consulting
-- `/pricing/` — Core ($7) and AI ($11), setup offer, FAQs
-- `/company/` — mission, principles, and founders
-- `/contact/` — contact and prefilled trial enquiries
-
-## Editing and building
-
-Edit page content and shared sections in `scripts/build.mjs`. HTML files are generated outputs. Edit custom styles in `styles/input.css` and interactions in `assets/site.js`.
-
-For the standard build workflow, install Node.js 20 or newer and run:
+Requires PHP 8.2+, Composer 2, and Laravel's PHP extensions. No database, frontend build, queue worker, or Node.js runtime is needed to serve the site.
 
 ```sh
-npm install
-npm run build
-npm run dev
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan serve
 ```
 
-The [Tailwind CLI](https://tailwindcss.com/docs/installation/tailwind-cli) is pinned to 4.1.13. This workspace also includes an ignored standalone compiler, so CSS can be rebuilt without Node:
+On PowerShell, use `Copy-Item .env.example .env` instead of `cp`. Open [localhost:8000](http://localhost:8000). Copy the environment file only on first setup; preserve existing keys and settings.
 
-```powershell
-.\.tools\tailwindcss.exe -i styles/input.css -o assets/styles.css --minify
-```
+## Pages and editing
 
-Run `node scripts/build.mjs` to regenerate HTML only. There is no separate bundle: HTML, compiled CSS, JavaScript, and the logo are the production files.
+- `routes/web.php`: Home, About, Services, Products, Nexa, and Contact routes.
+- `resources/views/pages/`: page content.
+- `resources/views/components/`: shared layout, navigation, footer, product screenshots, and calls to action.
+- `public/assets/site.css` and `site.js`: responsive styling and accessible mobile navigation.
+- `public/assets/nexus-qart-logo.svg`: new wordmark; `nexus-qart-mark.svg`: standalone mark and favicon.
+- `config/portfolio.php`: environment-backed contact email and Nexa link.
 
-## Business configuration
+The original static index and unavailable build scripts have been replaced by Laravel. Old company, pricing, and Intelligent QR routes redirect to their corresponding new pages.
 
-`assets/config.js` contains:
+## Content and configuration
 
-- `contactEmail`: configured as `neuroqrllc@gmail.com`.
-- `contactEndpoint`: optional HTTPS JSON POST endpoint. If supplied, the form sends `{name, business, email, phone, interest, message}` and treats HTTP 2xx as success. The endpoint must support the site's origin, validate submissions, and handle delivery.
-- `loginUrl`: empty because no verified product login destination was supplied. Login shows an accessible help dialog until configured.
-- `siteUrl`: set to the final HTTPS origin to enable canonical and Open Graph URL tags. No production domain is invented.
+### Adding a product
 
-**Contact opens the visitor's email application with a draft.** It does not silently send email, register an account, or activate a trial. Visitors review and send the email themselves. A text download provides a fallback when no email app is available. The direct email address is also displayed. No form content is saved in browser storage.
+The Products page and footer read from `config/products.php`. Add an entry with `name`, `category`, `tagline`, `description`, and either a named `route` (with its page defined in `routes/web.php`) or an external `url`. Optional fields are `login_url` and `image` (a path relative to `public/`). Without artwork, the listing displays the company mark. Nexa currently uses a custom `preview`. Rebuild production configuration caches after changing the catalog. The homepage can continue to feature one selected product independently of the full catalog.
 
-The assistant example uses fixed, labeled sample catalogue responses; it is not a live AI integration. The original supplied logo is preserved. Optional legal pages and unverified social links are omitted.
+Set `APP_URL` to the final HTTPS origin for correct generated URLs. Set `CONTACT_EMAIL` to the company inbox; the previous site's `neuroqrllc@gmail.com` remains the default until a replacement is supplied. `WOOPERLY_URL` defaults to the supplied login URL.
+
+Contact links open an email draft; the website does not send or store enquiries. Nexa keeps its own login and account handling. The menu and AI assistant screenshots are supplied product captures; the depicted business branding and menu content are examples. Features, pricing and offers follow the supplied Nexa Product Overview v2 (October 2026). Cart/ordering, semantic search and AI improvements are labeled as planned. Company/service copy is an initial draft for review. No invented client list or testimonials are included.
 
 ## Verification
 
 ```sh
-npm run check
-npm test
+composer test
+composer lint
+php artisan view:cache
+composer validate --strict
 ```
 
-Tests use Playwright with installed Microsoft Edge. Set `BROWSER_CHANNEL=chrome` to use installed Chrome. Tests start their own server on port 4174 and save desktop/mobile screenshots to ignored `.qa/`.
+Optional browser checks require Node.js and installed Microsoft Edge:
 
-Checks cover seven pages at 1440, 768, 390, and 320 pixels, internal links, image loading, unique metadata, pricing, menus and dialogs, FAQs, trial prefill, validation, enquiry download, sample responses, keyboard access, and reduced motion. They do not send messages or open an email application.
+```sh
+npm ci
+npm run check
+npm run test:browser
+```
 
-## Static hosting
+Tests start their own server on port 4174, check all six pages at 1440, 768, 390, and 320 pixels, and save screenshots under ignored `.qa/`. Set `BROWSER_CHANNEL=chrome` to use installed Chrome instead. Tests check navigation, local links, images, email drafts, FAQs, keyboard access, and navigation without JavaScript. They do not log in to Nexa or send email.
 
-Upload `index.html`, `assets/`, `products/`, `services/`, `pricing/`, `company/`, and `contact/` to any static host that serves directory `index.html` files. Exclude `.tools/`, `.qa/`, `node_modules/`, the brief, and development scripts. Set the verified public origin and login URL before launch. The local preview server is for development.
+## Namecheap deployment
+
+See [deploy/NAMECHEAP.md](deploy/NAMECHEAP.md) for both configurable document roots and fixed `public_html` hosting. Upload the PHP application and its production dependencies; npm and Node.js are only used for development checks.

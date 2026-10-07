@@ -1,0 +1,1 @@
+<section class="container cta-section"><div class="cta-panel"><div><p class="eyebrow">YOUR NEXT CHAPTER</p><h2>Something in mind?<br>Let’s make it happen.</h2></div><a class="button button-dark" href="{{ route('contact') }}">Start a conversation <span aria-hidden="true">↗</span></a></div></section>

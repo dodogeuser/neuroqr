@@ -5,3 +5,11 @@ __pycache__/
 .env
 .env.*
 !.env.example
+/vendor/
+/.phpunit.cache/
+/.phpunit.result.cache
+/public/hot
+/public/storage
+/auth.json
+/.idea/
+/.vscode/
