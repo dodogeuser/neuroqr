@@ -15,6 +15,7 @@
   <meta property="og:url" content="{{ url()->current() }}">
   <link rel="icon" href="{{ asset('assets/nexus-qart-mark.svg') }}" type="image/svg+xml">
   <link rel="stylesheet" href="{{ asset('assets/site.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/studio.css') }}">
   <script src="{{ asset('assets/site.js') }}" defer></script>
 </head>
 <body>
@@ -23,20 +24,30 @@
     <div class="container header-inner">
       <a href="{{ route('home') }}" class="brand" aria-label="Nexus Qart home"><img src="{{ asset('assets/nexus-qart-logo.svg') }}" width="221" height="42" alt="Nexus Qart"></a>
       <nav class="desktop-nav" aria-label="Main navigation">
-        @foreach (['home' => 'Home', 'about' => 'About', 'services' => 'Services', 'products' => 'Products'] as $name => $label)
+        @foreach (['home' => 'Home', 'services' => 'Services', 'products' => 'Products', 'about' => 'About'] as $name => $label)
           <a href="{{ route($name) }}" @if(request()->routeIs($name) || ($name === 'products' && request()->routeIs('nexa'))) aria-current="page" @endif>{{ $label }}</a>
         @endforeach
       </nav>
-      <a class="button button-small header-cta" href="{{ route('contact') }}">Let’s talk <span aria-hidden="true">↗</span></a>
-      <button class="menu-toggle" hidden type="button" aria-controls="mobile-nav" aria-expanded="false">Menu <span aria-hidden="true">☰</span></button>
+      <a class="button button-small header-cta" href="{{ route('contact') }}">Start a project <span aria-hidden="true">↗</span></a>
+      <button class="menu-toggle" hidden type="button" aria-controls="mobile-menu" aria-haspopup="dialog" aria-expanded="false">Menu <span aria-hidden="true">☰</span></button>
     </div>
-    <nav id="mobile-nav" class="mobile-nav container" aria-label="Mobile navigation" hidden>
-      @foreach (['home' => 'Home', 'about' => 'About', 'services' => 'Services', 'products' => 'Products', 'contact' => 'Contact'] as $name => $label)
-        <a href="{{ route($name) }}" @if(request()->routeIs($name)) aria-current="page" @endif>{{ $label }}</a>
-      @endforeach
-    </nav>
     <noscript><nav class="container fallback-nav" aria-label="Page navigation"><a href="{{ route('home') }}">Home</a><a href="{{ route('about') }}">About</a><a href="{{ route('services') }}">Services</a><a href="{{ route('products') }}">Products</a><a href="{{ route('contact') }}">Contact</a></nav></noscript>
   </header>
+  <dialog id="mobile-menu" class="mobile-drawer" aria-label="Site navigation">
+    <div class="drawer-panel">
+      <div class="drawer-heading">
+        <img src="{{ asset('assets/nexus-qart-logo.svg') }}" width="180" height="34" alt="Nexus Qart">
+        <button class="drawer-close" type="button" aria-label="Close menu" autofocus><span aria-hidden="true">×</span></button>
+      </div>
+      <p class="drawer-label">EXPLORE NEXUS QART</p>
+      <nav id="mobile-nav" aria-label="Mobile navigation">
+        @foreach (['home' => 'Home', 'about' => 'About', 'services' => 'Services', 'products' => 'Products', 'contact' => 'Contact'] as $name => $label)
+          <a href="{{ route($name) }}" @if(request()->routeIs($name) || ($name === 'products' && request()->routeIs('nexa'))) aria-current="page" @endif><span>{{ $label }}</span><span aria-hidden="true">↗</span></a>
+        @endforeach
+      </nav>
+      <div class="drawer-bottom"><p>Good ideas start with<br>a conversation.</p><a class="button button-dark" href="{{ route('contact') }}">Start a project <span aria-hidden="true">↗</span></a></div>
+    </div>
+  </dialog>
   <main id="main">{{ $slot }}</main>
   <footer class="site-footer">
     <div class="container footer-top">

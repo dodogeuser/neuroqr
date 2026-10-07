@@ -20,7 +20,7 @@ On PowerShell, use `Copy-Item .env.example .env` instead of `cp`. Open [localhos
 - `routes/web.php`: Home, About, Services, Products, Nexa, and Contact routes.
 - `resources/views/pages/`: page content.
 - `resources/views/components/`: shared layout, navigation, footer, product screenshots, and calls to action.
-- `public/assets/site.css` and `site.js`: responsive styling and accessible mobile navigation.
+- `public/assets/site.css`: base layouts; `studio.css`: company-wide visual design and responsive motion styles; `site.js`: accessible navigation and progressive scroll reveals. Entrance animations settle after playing once, and reduced-motion preferences disable animation.
 - `public/assets/nexus-qart-logo.svg`: supplied wordmark for light backgrounds; `nexus-qart-logo-light.svg`: footer variant; `nexus-qart-logo-mono.svg`: monochrome variant; `nexus-qart-mark.svg`: standalone mark and favicon. These production copies have the SVG path fill corrected and are independent of the source files in the project root.
 - `config/portfolio.php`: environment-backed contact email and Nexa link.
 
